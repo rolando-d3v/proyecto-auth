@@ -1,0 +1,45 @@
+
+PUT  http://127.0.0.1:8787/user/updated/1
+
+###
+GET http://10.5.10.13:4010/unidad/all-unidades
+
+###
+GET http://10.5.10.13:4010/unidad/all-unidades
+
+###
+
+GET http://localhost:4000/documento/data-doc/4565 HTTP/1.1
+
+###
+GET http://localhost:4000/documento/export/data-doc?nivel=6 HTTP/1.1
+
+###
+
+POST https://example.com/comments HTTP/1.1
+content-type: application/json
+
+{
+    "name": "sample",
+    "time": "Wed, 21 Oct 2015 18:27:50 GMT"
+}
+
+###
+# AUTH CON PERSONAL
+POST http://10.5.10.13:4010/auth-AD HTTP/1.1
+content-type: application/json
+
+{
+    "dni": "44448888",
+    "password": "20React2024",
+    "sistema": 1
+}
+###
+POST http://10.5.10.13:4010/auth-AD HTTP/1.1
+content-type: application/json
+
+{
+    "dni": "44974829",
+    "password": "20Peru2024",
+    "sistema": 2
+}
