@@ -22,6 +22,6 @@ console.log(process.env.DATABASE_URL);
 
 
 export default { 
-  port: 4000, 
+  port: process.env.PORT || 3000, 
   fetch: app.fetch, 
 } 
