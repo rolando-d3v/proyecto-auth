@@ -1,6 +1,8 @@
 import { Context } from 'hono'
 import { product, users } from '../../drizzle/schema';
 import { db } from '../../drizzle/db';
+import { rolex } from '../../../drizzle/schema';
+import { sql } from 'drizzle-orm';
 
 
 
@@ -63,7 +65,16 @@ export const producto = async (c: Context) => {
     const result = await db.select({
         id: product.id,
         name: product.email,
-      }).from(product);
+        
+      }).from(product).where(sql`${product.id} = 42`);;
+
+
+
+      const result2 = await db.select({
+        id: product.id,
+        name: product.name,
+
+      }).from(rolex);
 
 
       console.log(result);

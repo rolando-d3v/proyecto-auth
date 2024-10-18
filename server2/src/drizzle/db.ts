@@ -2,9 +2,11 @@ import "dotenv/config";
 
 
 import { configDotenv } from "dotenv";
-import { drizzle } from "drizzle-orm/node-postgres";
+import { NodePgDatabase, drizzle } from "drizzle-orm/node-postgres";
 import { migrate } from "drizzle-orm/node-postgres/migrator";
 import { Pool } from "pg";
+
+// import * as schema from './schema';
 
 configDotenv();
 
@@ -12,7 +14,12 @@ const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
 });
 
+
 export const db = drizzle(pool);
+
+
+
+// export const db: NodePgDatabase<typeof schema> = drizzle(pool, { schema });
 
 async function main() {
   console.log("mirgrating...");
