@@ -1,8 +1,6 @@
 import "dotenv/config";
 
 
-
-
 import { configDotenv } from "dotenv";
 import { drizzle } from "drizzle-orm/node-postgres";
 import { migrate } from "drizzle-orm/node-postgres/migrator";
@@ -40,7 +38,6 @@ main().catch((error) => {
 
 
 
-// import postgres from "po"
 // const client = postgres(process.env.DATABASE_URL as string)
 // export const db = drizzle(client, { schema, logger: true})
 
