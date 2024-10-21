@@ -7,9 +7,6 @@ import { sql } from 'drizzle-orm';
 
 
 
-
-
-
 //? CREATE ONE REGISTRO
 //? **********************************************************************/
 export const updatedUser = async (c: Context) => {

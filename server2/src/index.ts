@@ -3,10 +3,9 @@ import { prettyJSON } from 'hono/pretty-json'
 import { cors } from 'hono/cors'
 import user from './api/user/user.routes'
 
-
-
-
 const app = new Hono  ()
+
+
 
 // middleware
 app.use('/api/*', cors())
@@ -18,10 +17,10 @@ app.notFound((c) => {
 // routes
 app.route('/user', user)
 
-console.log(process.env.DATABASE_URL);
 
-
+//server
 export default { 
-  port: process.env.PORT || 3000, 
+  port: process.env.PORT || 4000, 
   fetch: app.fetch, 
+  
 } 
