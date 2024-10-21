@@ -13,17 +13,23 @@ export const authToken = async (c: Context, next: Next) => {
 
         const trueToken = c.req.header("Authorization")
 
+        // console.log(!trueToken);
+
         if (!trueToken) {
-            throw new HTTPException(400, { message: "no tienes token" })
+            c.status(401)
+            console.error("No tienees token");
+            return c.json({ msj: "No tienes token" }, 401)
+            // throw new HTTPException(400, { message: "no tienes token" })
         }
 
-        const decodedPayload = await verify(trueToken, Bun.env.SECRET_JWT || "secreto")
+        await verify(trueToken, Bun.env.SECRET_JWT || "secreto")
+
 
         await next()
 
     } catch (err) {
         console.error(`Error: ${err}`);
-        return c.json({ error: 'No tienes Autorizacion', err }, 400);
+        return c.json({ error: 'Unauthorized', err }, 401);
 
     }
 

@@ -1,8 +1,8 @@
 import { Context } from 'hono'
-import { Prisma, PrismaClient } from '@prisma/client'
 import User from './user.type.valid';
+import { db_prisma } from '../../db/db_prisma';
 
-const prisma = new PrismaClient();
+
 
 
 
@@ -25,7 +25,7 @@ export const createUser = async (c: Context) => {
     
 
     try {
-        const usuario = await prisma.usuario.create({
+        const usuario = await db_prisma.usuario.create({
             data: {
                 nombre: capitalizeName(user.nombre),
                 email: user.email,

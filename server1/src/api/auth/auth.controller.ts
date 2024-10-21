@@ -1,10 +1,9 @@
 import { Context } from 'hono'
-import { sign, verify } from 'hono/jwt';
+import { sign } from 'hono/jwt';
 import User from '../user/user.type.valid';
+import { db_prisma } from '../../db/db_prisma';
 
-import { PrismaClient } from "@prisma/client";
 
-const prisma = new PrismaClient();
 
 
 //? LOGIN USER
@@ -21,7 +20,7 @@ export const loginUser = async (c: Context) => {
     }
 
 
-    const emailExiste = await prisma.usuario.findFirstOrThrow({
+    const emailExiste = await db_prisma.usuario.findFirstOrThrow({
       where: {
         email: email
       }
@@ -42,7 +41,7 @@ export const loginUser = async (c: Context) => {
 
     const payload = {
       email: email,
-      exp: Math.floor(Date.now() / 1000) + 60 * 60, 
+      exp: Math.floor(Date.now() / 1000) + 60 * 60 * 1, 
     }
 
     const token = await sign(payload, Bun.env.SECRET_JWT || "secreto")

@@ -1,18 +1,17 @@
 import { Context } from "hono";
-import { HTTPException } from "hono/http-exception";
 import Producto from "./producto.type.valid";
-import { Prisma, PrismaClient } from "@prisma/client";
+import { db_prisma } from "../../db/db_prisma";
 
-const prisma = new PrismaClient();
+
 
 //? CREATE PRODUCTO
 //? **********************************************************************/
 export const createProducto = async (c: Context) => {
     try {
         const pro: Producto = await c.req.json();
-        
 
-        const producto = await prisma.producto.create({
+
+        const producto = await db_prisma.producto.create({
             data: {
                 nombre: pro.nombre,
                 descripcion: pro.descripcion,
@@ -35,7 +34,7 @@ export const createProducto = async (c: Context) => {
 //? **********************************************************************/
 export const allProducto = async (c: Context) => {
     try {
-        const producto = await prisma.producto.findMany({});
+        const producto = await db_prisma.producto.findMany({});
 
         c.status(200);
         return c.json({ msje: "success", producto });
@@ -58,7 +57,7 @@ export const oneProducto = async (c: Context) => {
         const id = parseInt(c.req.param("id"));
         // console.log(id);
 
-        const productoExiste = await prisma.producto.findUnique({
+        const productoExiste = await db_prisma.producto.findUnique({
             where: {
                 id
             }
@@ -86,7 +85,7 @@ export const updateProducto = async (c: Context) => {
     const pro: Producto = await c.req.json();
     try {
 
-        const productoExiste = await prisma.producto.findUnique({
+        const productoExiste = await db_prisma.producto.findUnique({
             where: {
                 id
             }
@@ -97,7 +96,7 @@ export const updateProducto = async (c: Context) => {
         }
 
 
-        const producto = await prisma.producto.update({
+        const producto = await db_prisma.producto.update({
             where: { id },
             data: {
                 nombre: pro.nombre,
@@ -120,7 +119,7 @@ export const removeProducto = async (c: Context) => {
 
     try {
 
-        const productoExiste = await prisma.producto.findUnique({
+        const productoExiste = await db_prisma.producto.findUnique({
             where: {
                 id
             }
@@ -131,7 +130,7 @@ export const removeProducto = async (c: Context) => {
         }
 
 
-        const producto = await prisma.producto.delete({
+        const producto = await db_prisma.producto.delete({
             where: { id },
         });
 
