@@ -1,7 +1,7 @@
 import { Context } from 'hono'
 import { product, users } from '../../drizzle/schema';
 import { db } from '../../drizzle/db';
-import { rolex } from '../../../drizzle/schema';
+import { rolex } from '../../drizzle/schema';
 import { sql } from 'drizzle-orm';
 
 

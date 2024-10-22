@@ -1,7 +1,10 @@
 {
   "name": "server2",
   "scripts": {
-    "dev": "bun run --hot src/index.ts"
+    "dev": "bun run --hot src/index.ts",
+    "generate": "bun drizzle-kit generate",
+    "migrate": "bun drizzle-kit migrate",
+    "pull": "bun drizzle-kit pull"
   },
   "dependencies": {
     "dotenv": "^16.4.5",
