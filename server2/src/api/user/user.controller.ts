@@ -1,36 +1,42 @@
 import { Context } from 'hono'
 import { usuario } from '../../drizzle/schema';
 import { db } from '../../drizzle/db';
-import { sql } from 'drizzle-orm';
+import { eq } from 'drizzle-orm';
 import User from './user.type.valid';
+import { password } from 'bun';
 
 
 
-
-//? CREATE ONE REGISTRO
+//? CREATE ONE USER
 //? **********************************************************************/
 export const createUser = async (c: Context) => {
-
 
   try {
 
     const u: User = await c.req.json();
 
+    const nameChangue = (namex: string) => {
+      const nameLower = namex.toLowerCase()
+      return nameLower.replace(/\b\w/g, (char) => char.toUpperCase());
+    }
+
+
+    console.log(u.password);
+    
+
     const user = await db.insert(usuario)
       .values({
-        name: u.name,
+        name: nameChangue(u.name),
         dni: u.dni,
-        email: u.email
+        email: u.email,
+        password: await Bun.password.hash(u.password)
+
       }).returning();
 
 
     console.log(user);
-    // console.log(user);
 
-    // "command": "INSERT",
-    // "rowCount": 1,
-
-    return c.json({ msj: "success", user: user })
+    return c.json({ msj: "created success", user: user })
 
   } catch (err) {
 
@@ -40,46 +46,72 @@ export const createUser = async (c: Context) => {
 
   }
 
-
-
-
-
-
 }
 
 
 
-//? CREATE ONE REGISTRO
+//? GET ALL USER
 //? **********************************************************************/
 export const allUser = async (c: Context) => {
 
-  const result = await db.select({
-    id: usuario.id,
-    dni: usuario.dni,
-    name: usuario.email,
-  }).from(usuario);
+  try {
 
-  console.log(result);
+    const result = await db.select(
+      {
+        id: usuario.id,
+        dni: usuario.dni,
+        name: usuario.email,
+      }
+    ).from(usuario);
 
-  return c.json({ Nombre: "Rolando d3v", carrera: "ing sistema", result })
+    console.log(result);
+
+    return c.json({ msj: "success", usuario: result })
+
+  } catch (err) {
+    console.error(`Error: ${err}`);
+    return c.json({ msj: "Error server", err }, 400)
+
+  }
 }
 
 
 
-//? CREATE ONE REGISTRO
+//? UPDATE ONE USER
 //? **********************************************************************/
 export const updatedUser = async (c: Context) => {
 
-  // const id = c.req.param('id')
-  const id = parseInt(c.req.param('id'));
+  try {
 
-  console.log(id);
+    const id = c.req.param('id');
+
+    console.log(id);
+
+    const usuarioExiste = await db.select()
+      .from(usuario)
+      .where(eq(usuario.id, id))
+      .then(result => result.length > 0);
 
 
+    console.log(usuarioExiste);
 
-  return c.text('List Books' + id)
+    if (!usuarioExiste) {
+      throw new Error(`Usuario with id ${id} does not exist.`);
+    }
 
 
+    const updatedUser = await db.update(usuario)
+      .set({ name: "Marianella" })
+      .where(eq(usuario.id, id))
+      .returning({ id: usuario.id });
+
+
+    return c.json({ msj: "updated success", updatedUser })
+
+  } catch (err) {
+    console.error(`Error: ${err}`);
+    return c.json({ msj: "Error server", err }, 400)
+  }
 
 }
 
@@ -88,23 +120,37 @@ export const updatedUser = async (c: Context) => {
 
 
 
-//? CREATE ONE REGISTRO
+//? DELETE ONE USER
 //? **********************************************************************/
 export const deleteUser = async (c: Context) => {
 
-  // const result = await db.select({
-  //   id: producto.id,
-  //   name: producto.descripcion,
+  try {
+    const id = c.req.param('id');
 
-  // }).from(producto).where(sql`${producto.id} = 42`);;
+    console.log(id);
 
-
-
-
-
-  // console.log(result);
+    const usuarioExiste = await db.select()
+      .from(usuario)
+      .where(eq(usuario.id, id))
+      .then(result => result.length > 0);
 
 
+    console.log(usuarioExiste);
 
-  return c.json({ Nombre: "Rolando d3v", carrera: "ing sistema" })
+    if (!usuarioExiste) {
+      throw new Error(`Usuario with id ${id} does not exist.`);
+    }
+
+    const deleteUser = await db.delete(usuario)
+      .where(eq(usuario.id, id))
+      .returning({ id: usuario.id });
+
+
+    return c.json({ msj: "deleted success", deleteUser })
+
+  } catch (err) {
+    console.error(`Error: ${err}`);
+    return c.json({ msj: "Error server", err }, 400)
+  }
+
 }

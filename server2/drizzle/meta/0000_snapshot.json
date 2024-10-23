@@ -1,11 +1,11 @@
 {
-  "id": "00000000-0000-0000-0000-000000000000",
-  "prevId": "",
+  "id": "3d7d195b-d235-448d-867f-3cd21ee29f80",
+  "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
-    "public.product": {
-      "name": "product",
+    "public.producto": {
+      "name": "producto",
       "schema": "",
       "columns": {
         "id": {
@@ -105,11 +105,8 @@
   "schemas": {},
   "sequences": {},
   "_meta": {
+    "columns": {},
     "schemas": {},
-    "tables": {},
-    "columns": {}
-  },
-  "internal": {
     "tables": {}
   }
 }

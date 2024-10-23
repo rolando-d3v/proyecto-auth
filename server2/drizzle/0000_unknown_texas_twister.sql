@@ -1,7 +1,4 @@
--- Current sql file was generated after introspecting the database
--- If you want to run this migration please uncomment this code before executing migrations
-/*
-CREATE TABLE IF NOT EXISTS "product" (
+CREATE TABLE IF NOT EXISTS "producto" (
 	"id" serial PRIMARY KEY NOT NULL,
 	"name_producto" varchar(256),
 	"descripcion" varchar(256),
@@ -20,5 +17,3 @@ CREATE TABLE IF NOT EXISTS "usuario" (
 	"dni" char(8),
 	"email" varchar(150) NOT NULL
 );
-
-*/
