@@ -1,39 +1,50 @@
 import { Context } from 'hono'
-import { product, users } from '../../drizzle/schema';
+import { usuario } from '../../drizzle/schema';
 import { db } from '../../drizzle/db';
-import { rolex } from '../../drizzle/schema';
 import { sql } from 'drizzle-orm';
+import User from './user.type.valid';
 
 
 
 
 //? CREATE ONE REGISTRO
 //? **********************************************************************/
-export const updatedUser = async (c: Context) => {
+export const createUser = async (c: Context) => {
 
-    // const id = c.req.param('id')
-    const id = parseInt(c.req.param('id'));
 
-    console.log(id);
+  try {
 
- 
+    const u: User = await c.req.json();
 
-     return c.text('List Books' + id)
-     
-    
-    // const { name, email } = c.req.parsedBody;
+    const user = await db.insert(usuario)
+      .values({
+        name: u.name,
+        dni: u.dni,
+        email: u.email
+      }).returning();
 
-  
-    // try {
-    //   const user = await prisma.user.update({
-    //     where: { id },
-    //     data: { name, email },
-    //   });
-    //   return c.json(user);
-    // } catch (error) {
-    //   return c.json({ error: 'Error al actualizar el usuario' }, 400);
-    // }
-    //   }
+
+    console.log(user);
+    // console.log(user);
+
+    // "command": "INSERT",
+    // "rowCount": 1,
+
+    return c.json({ msj: "success", user: user })
+
+  } catch (err) {
+
+    console.error(`Error: ${err}`);
+    return c.json({ msj: "Error server", err }, 400)
+
+
+  }
+
+
+
+
+
+
 }
 
 
@@ -41,42 +52,59 @@ export const updatedUser = async (c: Context) => {
 //? CREATE ONE REGISTRO
 //? **********************************************************************/
 export const allUser = async (c: Context) => {
-    
-    const result = await db.select({
-        id: users.id,
-        dni: users.dni,
-        name: users.email,
-      }).from(users);
 
-      console.log(result);
+  const result = await db.select({
+    id: usuario.id,
+    dni: usuario.dni,
+    name: usuario.email,
+  }).from(usuario);
 
-    return c.json({ Nombre: "Rolando d3v", carrera: "ing sistema", result })
+  console.log(result);
+
+  return c.json({ Nombre: "Rolando d3v", carrera: "ing sistema", result })
 }
 
 
 
 //? CREATE ONE REGISTRO
 //? **********************************************************************/
-export const producto = async (c: Context) => {
-    
-    const result = await db.select({
-        id: product.id,
-        name: product.email,
-        
-      }).from(product).where(sql`${product.id} = 42`);;
+export const updatedUser = async (c: Context) => {
+
+  // const id = c.req.param('id')
+  const id = parseInt(c.req.param('id'));
+
+  console.log(id);
 
 
 
-      const result2 = await db.select({
-        id: product.id,
-        name: product.name,
-
-      }).from(rolex);
+  return c.text('List Books' + id)
 
 
-      console.log(result);
-      
+
+}
 
 
-    return c.json({ Nombre: "Rolando d3v", carrera: "ing sistema", result })
+
+
+
+
+//? CREATE ONE REGISTRO
+//? **********************************************************************/
+export const deleteUser = async (c: Context) => {
+
+  // const result = await db.select({
+  //   id: producto.id,
+  //   name: producto.descripcion,
+
+  // }).from(producto).where(sql`${producto.id} = 42`);;
+
+
+
+
+
+  // console.log(result);
+
+
+
+  return c.json({ Nombre: "Rolando d3v", carrera: "ing sistema" })
 }

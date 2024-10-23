@@ -1,5 +1,5 @@
 
-PUT  http://127.0.0.1:8787/user/updated/1
+GET   http://127.0.0.1:4000/user/all
 
 ###
 GET http://10.5.10.13:4010/unidad/all-unidades
@@ -16,12 +16,13 @@ GET http://localhost:4000/documento/export/data-doc?nivel=6 HTTP/1.1
 
 ###
 
-POST https://example.com/comments HTTP/1.1
+POST http://127.0.0.1:4000/user/create HTTP/1.1
 content-type: application/json
 
 {
-    "name": "sample",
-    "time": "Wed, 21 Oct 2015 18:27:50 GMT"
+    "name": "Heizell",
+    "dni": "44448888",
+    "email": "heizell@gmail.com"
 }
 
 ###

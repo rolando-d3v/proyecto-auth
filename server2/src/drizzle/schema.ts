@@ -1,14 +1,14 @@
 import { char, numeric, pgTable, serial, varchar } from 'drizzle-orm/pg-core';
 
-export const users = pgTable('users', {
+export const usuario = pgTable('usuario', {
   id: serial('id').primaryKey(),
   name: varchar('name', { length: 256 }),
   dni: char('dni', { length: 8 }),
-  email: varchar('email', { length: 150 }),
+  email: varchar({ length: 150 }).notNull(),
 });
 
 
-export const product = pgTable('product', {
+export const producto = pgTable('producto', {
   id: serial().primaryKey(),
   name_producto: varchar({ length: 256 }),
   descripcion: varchar({ length: 256 }),
@@ -16,7 +16,7 @@ export const product = pgTable('product', {
 });
 
 
-export const rolex = pgTable('rolex', {
+export const role = pgTable('role', {
   id: serial('id').primaryKey(),
   name: varchar('name', { length: 256 }),
   email: varchar('email', { length: 256 }),

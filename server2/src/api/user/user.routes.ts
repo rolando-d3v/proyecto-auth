@@ -2,14 +2,18 @@ import { Hono } from 'hono'
 import * as Ctrl from './user.controller'
 
 
-const user = new Hono()
+ export  const userRoutes = new Hono()
 
-user.get('/users-all', Ctrl.allUser)
-user.get('productos', Ctrl.producto)
-user.get('/id-user/:id', Ctrl.allUser)
-user.put('/update/:id', Ctrl.updatedUser)
-user.post('/create', Ctrl.updatedUser)
-user.delete('/delete/:id', Ctrl.updatedUser)
+userRoutes.get('/all', Ctrl.allUser)
+userRoutes.post('/create', Ctrl.createUser)
 
 
-export default user
+
+// userRoutes.get('productos', Ctrl.producto)
+
+userRoutes.get('/id-user/:id', Ctrl.allUser)
+userRoutes.put('/update/:id', Ctrl.updatedUser)
+userRoutes.delete('/delete/:id', Ctrl.updatedUser)
+
+
+// export default userRoutes

@@ -2,7 +2,10 @@ import { Hono } from 'hono'
 import { prettyJSON } from 'hono/pretty-json'
 import { cors } from 'hono/cors'
 import { logger } from 'hono/logger'
-import user from './api/user/user.routes'
+import { userRoutes } from './api/user/user.routes'
+
+
+
 
 const app = new Hono()
 
@@ -17,11 +20,11 @@ app.notFound((c) => {
 })
 
 // routes
-app.route('/user', user)
+app.route('/user', userRoutes)
 
 
 //server
 export default {
-  port: process.env.PORT || 4000,
+  port: Bun.env.PORT || 4000,
   fetch: app.fetch,
 } 

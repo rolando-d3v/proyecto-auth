@@ -1,17 +1,13 @@
-import "dotenv/config";
 
-
-import { configDotenv } from "dotenv";
 import { NodePgDatabase, drizzle } from "drizzle-orm/node-postgres";
 import { migrate } from "drizzle-orm/node-postgres/migrator";
 import { Pool } from "pg";
 
 // import * as schema from './schema';
 
-configDotenv();
 
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
+  connectionString: Bun.env.DATABASE_URL,
 });
 
 
