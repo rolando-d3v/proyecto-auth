@@ -22,7 +22,7 @@ export const createUser = async (c: Context) => {
 
 
     console.log(u.password);
-    
+
 
     const user = await db.insert(usuario)
       .values({
@@ -58,9 +58,10 @@ export const allUser = async (c: Context) => {
 
     const result = await db.select(
       {
-        id: usuario.id,
         dni: usuario.dni,
-        name: usuario.email,
+        name: usuario.name,
+        email: usuario.email,
+        descripcion: usuario.descripcion,
       }
     ).from(usuario);
 

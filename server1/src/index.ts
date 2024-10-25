@@ -7,8 +7,6 @@ import authRoutes from './api/auth/auth.routes'
 import productoRoutes from './api/producto/producto.routes'
 
 
-
-
 const app = new Hono()
 
 // middleware

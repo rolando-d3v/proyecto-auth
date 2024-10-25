@@ -3,20 +3,13 @@ import User from './user.type.valid';
 import { db_prisma } from '../../db/db_prisma';
 
 
-
-
-
 //? CREATE USUARIO
 //? **********************************************************************/
 export const createUser = async (c: Context) => {
 
     const user: User = await c.req.json();
 
-    console.log(user.dni);
-
-
     const hashPassword = await Bun.password.hash(user.password);
-
 
     const capitalizeName = (namex: string) => {
         const nameLower = namex.toLowerCase()
@@ -35,8 +28,6 @@ export const createUser = async (c: Context) => {
             },
         });
 
-        console.log(usuario);
-        
         return c.json({ msj: " success", usuario });
     } catch (err: unknown) {
         console.error(`Error: ${err}`);

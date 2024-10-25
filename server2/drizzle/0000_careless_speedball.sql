@@ -12,8 +12,12 @@ CREATE TABLE IF NOT EXISTS "role" (
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "usuario" (
-	"id" serial PRIMARY KEY NOT NULL,
+	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
 	"name" varchar(256),
 	"dni" char(8),
-	"email" varchar(150) NOT NULL
+	"password" varchar(255),
+	"email" varchar(150) NOT NULL,
+	"descripcion" text,
+	"estado" boolean DEFAULT true,
+	"createAt" timestamp DEFAULT now()
 );
